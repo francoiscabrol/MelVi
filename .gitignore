@@ -1,11 +1,27 @@
 # Java
 *.class
-*.jar
+
+# sbt specific
+.cache/
+.history/
+.lib/
+dist/*
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
 
 # Intellij
+out/
 .idea/
+.idea_sauv/
 *.iml
 *.iws
+*.ipr
+
+# Vim
+.swp
 
 # Mac
 .DS_Store

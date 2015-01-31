@@ -23,10 +23,13 @@ import javax.swing.JFrame
 import javafx.embed.swing.JFXPanel
 import javafx.application.Platform
 import javafx.scene.Scene
+import javafx.scene.layout.BorderPane
+import javafx.scene.layout.HBox
+import javafx.scene.control.Button
+import javafx.geometry.Insets
 import com.cabrol.francois.melvi.factory.{GraphicsType, ChartFactory}
 import com.cabrol.francois.libjamu.musictheory.entity.note.Note
 import java.awt.{Point, Component}
-
 
 /**
  * Created with IntelliJ IDEA.
@@ -61,8 +64,18 @@ class VisualiserView(notes:List[Note], graphicsType:GraphicsType.GraphicsType) {
   }
 
   def createScene:Scene = {
+    // Create the option menu
+    val hbox = new MenuTop(notes)
+
+    // Create the charts panels
     val panel = ChartFactory.createChartPanel(graphicsType, notes)
-    new Scene(panel,400,400)
+
+    // Create the container
+    val border = new BorderPane()
+    border.setTop(hbox)
+    border.setCenter(panel)
+
+    new Scene(border,400,400)
   }
 
   def getWidth:Int = frame.getWidth
@@ -77,19 +90,3 @@ class VisualiserView(notes:List[Note], graphicsType:GraphicsType.GraphicsType) {
 
 }
 
-
-
-//abstract class VisualiserDrawer(val root:Group) {
-//
-//  lazy val offset = 20;
-//
-//  private def drawOffsetRectangle = root.getChildren.add(new Rectangle(getHeight-offset))
-//
-//  protected def drawGraphics:Unit
-//
-//  def draw:Unit = {
-//    drawOffsetRectangle
-//    drawGraphics
-//  }
-//
-//}

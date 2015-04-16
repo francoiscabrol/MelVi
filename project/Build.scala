@@ -9,7 +9,7 @@ object MelviBuild extends Build {
 
   val ORGANIZATION = "francoiscabrol"
   val PROJECT_NAME = "melvi"
-  val PROJECT_VERSION = "0.3.0"
+  val PROJECT_VERSION = "0.3.1"
   val SCALA_VERSION = "2.11.4"
 
   //////////////////////////////////////////////////////////////////////////////

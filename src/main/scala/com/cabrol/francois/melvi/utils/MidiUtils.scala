@@ -28,6 +28,7 @@ import javax.sound.midi.Sequence
 import javax.sound.midi.SysexMessage
 import javax.sound.midi.MetaMessage
 
+import com.cabrol.francois.libjamu.midi.utils.TickUtils
 import com.cabrol.francois.libjamu.musictheory.entity.note.Note
 
 /**
@@ -78,8 +79,8 @@ object MidiUtils {
 
     val maxTicks = (for (n <- notes) yield {
       println(n)
-      val start = (n.getRhythmicNote.getStart * 10).toInt
-      val end   = start + (n.getRhythmicNote.getDuration * 10).toInt
+      val start = TickUtils.convertTockToTick(n.getRhythmicNote.getStart).toInt
+      val end   = start + TickUtils.convertTockToTick(n.getRhythmicNote.getDuration).toInt
       track.add(makeEvent(NOTE_ON, 0, n.getKey.getMidiKey, n.getRhythmicNote.getVelocity, start))
       track.add(makeEvent(NOTE_OFF, 0, n.getKey.getMidiKey, n.getRhythmicNote.getVelocity, end))
       end

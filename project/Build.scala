@@ -20,7 +20,9 @@ object MelviBuild extends Build {
     id = PROJECT_NAME,
     base = file("."),
     settings = melviSettings
-  )
+  ).dependsOn(libjamu)
+
+  lazy val libjamu = uri("git://github.com/francoiscabrol/libjamu")
 
   //////////////////////////////////////////////////////////////////////////////
   // SETTINGS

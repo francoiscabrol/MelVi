@@ -20,13 +20,8 @@
 package com.cabrol.francois.melvi.utils
 
 import java.io.File
-import javax.sound.midi.ShortMessage
 import javax.sound.midi.ShortMessage._
-import javax.sound.midi.MidiEvent
-import javax.sound.midi.MidiSystem
-import javax.sound.midi.Sequence
-import javax.sound.midi.SysexMessage
-import javax.sound.midi.MetaMessage
+import javax.sound.midi.{MetaMessage, MidiEvent, MidiSystem, Sequence, ShortMessage, SysexMessage}
 
 import com.cabrol.francois.libjamu.midi.utils.TickUtils
 import com.cabrol.francois.libjamu.musictheory.entity.note.Note
@@ -48,15 +43,8 @@ object MidiUtils {
     var me = new MidiEvent(sm, 0);
     track.add(me);
 
-    // set tempo (meta event)
-    var mt = new MetaMessage();
-    val bt = Array[Byte](0x03, 0x00, 0x00);
-    mt.setMessage(0x51, bt, 3);
-    me = new MidiEvent(mt, 0);
-    track.add(me);
-
     // set track name (meta event)
-    mt = new MetaMessage();
+    var mt = new MetaMessage();
     val trackName = new String("mural track");
     mt.setMessage(0x03, trackName.getBytes(), trackName.length());
     me = new MidiEvent(mt, 0);
@@ -100,19 +88,16 @@ object MidiUtils {
     val sequencer = MidiSystem.getSequencer();
     sequencer.open();
     sequencer.setSequence(seq);
-    sequencer.setTempoInBPM(220);
+    sequencer.setTempoInBPM(80);
     sequencer.start();
   }
 
-  def writeMifiFile(notes: List[Note]) = {
+  def writeMifiFile(notes: List[Note], file: File) = {
     val seq = createSequence(notes)
-
-    // Create file called "melody export"
-    val file = new File("melody-export.mid");
 
     // write the MIDI sequence to a MIDI file
     MidiSystem.write(seq, 1, file);
 
-    println("[Melvi] Wrote in midi file : " + file.getAbsolutePath())
+    println("[Melvi] Wrote in midi file : " + file.getAbsolutePath());
   }
 }

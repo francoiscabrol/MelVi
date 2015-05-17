@@ -22,6 +22,8 @@ package com.cabrol.francois.melvi.view
 import javafx.event.{ActionEvent, EventHandler}
 import javafx.scene.control.Button
 import javafx.scene.layout.HBox
+import javafx.stage.FileChooser
+import javafx.stage.FileChooser.ExtensionFilter
 
 import com.cabrol.francois.libjamu.musictheory.entity.note.Note
 import com.cabrol.francois.melvi.utils.MidiUtils
@@ -44,7 +46,15 @@ class MenuTop(notes:List[Note]) extends HBox {
   buttonExport.setPrefSize(100, 20)
   buttonExport.setOnAction(new EventHandler[ActionEvent] {
     def handle(event: ActionEvent) {
-      MidiUtils.writeMifiFile(notes)
+      val fileChooser = new FileChooser();
+      fileChooser.setTitle("Open Resource File");
+      fileChooser.getExtensionFilters().addAll(
+        new ExtensionFilter("Midi Files", "*.midi"),
+        new ExtensionFilter("All Files", "*.*"));
+      val file = fileChooser.showSaveDialog(null);
+      if (file != null) {
+        MidiUtils.writeMifiFile(notes, file)
+      }
     }
   })
   
